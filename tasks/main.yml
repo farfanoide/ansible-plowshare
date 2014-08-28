@@ -28,13 +28,13 @@
   sudo: yes
 
 - name: ensure repo available
-  apt_repository: repo='ppa:plowsharepackagers/ppa'
+  apt_repository: repo='deb http://ppa.launchpad.net/plowsharepackagers/ppa/ubuntu trusty main' state=present update_cache=yes mode=0420
   tags:
     - plowshare
   sudo: yes
 
 - name: Ensure packages available
-  apt: pkg=plowshare state=present install_recommends=no
+  apt: pkg=plowshare4 state=latest install_recommends=yes force=yes
   tags:
     - plowshare
   sudo: yes
@@ -43,3 +43,6 @@
   copy: src=../files/plowshare.conf dest=~/.config/plowshare/
   tags:
     - plowshare
+
+- name: install libcaca to view images
+  apt: pkg=caca-utils
